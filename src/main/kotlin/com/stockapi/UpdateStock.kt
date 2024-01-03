@@ -48,7 +48,7 @@ class UpdateStock {
             stockGroups.values.forEach { group ->
                 group.tickers.forEach { stock ->
                     Stocks[stock.ticker] = stock
-                    loadHistoricalData(stock.ticker)
+                    //loadHistoricalData(stock.ticker)
                 }
             }
         }
@@ -86,7 +86,7 @@ class UpdateStock {
                 val averagePart = line.substringAfter("Average=").substringBefore(",")
                 val price = averagePart.toDoubleOrNull()
                 price?.let {
-                    Stocks[ticker]?.addHistoricalData(it)
+                   // Stocks[ticker]?.addHistoricalData(it)
                     lastPrice = it
                 }
             }
@@ -97,8 +97,8 @@ class UpdateStock {
         }
     }
 
+    // This method now only reads historical data from the file system when called
     fun getHistoricalData(ticker: String, interval: Interval, count: Int): List<Triple<Double, Double, Double>> {
-        val stock = Stocks[ticker] ?: throw IllegalArgumentException("Stock not found")
         val file = File("$folderPath/$ticker.txt")
         if (!file.exists()) return emptyList()
 
